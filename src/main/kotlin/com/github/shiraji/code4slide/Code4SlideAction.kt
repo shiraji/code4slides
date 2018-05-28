@@ -23,13 +23,11 @@ class Code4SlideAction : AnAction() {
         val firstElement = file.findElementAt(selectionStart) ?: return
         val selectionEnd = editor.selectionModel.selectionEnd
         val endElement = file.findElementAt(selectionEnd) ?: return
+        val firstParents = firstElement.parents().asIterable().plus(firstElement)
+        val endParents = endElement.parents().asIterable().plus(endElement)
 
-        firstElement.parents()
-
-        firstElement.parents().
-
-        val commonParent = firstElement.parents().firstOrNull { parent ->
-            endElement.parents().firstOrNull {endParent ->
+        val commonParent = firstParents.firstOrNull { parent ->
+            endParents.firstOrNull {endParent ->
                 parent == endParent
             } != null
         } ?: return
