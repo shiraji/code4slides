@@ -5,15 +5,11 @@ import com.intellij.lang.Language
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.editor.impl.EditorImpl
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.impl.FileEditorManagerImpl
-import com.intellij.openapi.fileEditor.impl.text.PsiAwareTextEditorImpl
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.*
+import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.*
-import org.intellij.plugins.relaxNG.compact.psi.util.PsiFunction
-import java.util.*
 
 class Code4SlideAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent?) {
@@ -22,18 +18,66 @@ class Code4SlideAction : AnAction() {
         val manager = FileEditorManager.getInstance(project);
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val file = e.getData(CommonDataKeys.PSI_FILE) ?: return
-        val offset = editor.caretModel.offset
-        val element = file.findElementAt(offset) ?: return
 
-        // diff by language
-        val parent = PsiTreeUtil.getParentOfType(element, PsiIfStatement::class.java, PsiMethod::class.java, PsiClass::class.java, PsiSwitchStatement::class.java) ?: return
+        val selectionStart = editor.selectionModel.selectionStart
+        val firstElement = file.findElementAt(selectionStart) ?: return
+        val selectionEnd = editor.selectionModel.selectionEnd
+        val endElement = file.findElementAt(selectionEnd) ?: return
 
-        val scratchFile = ScratchRootType.getInstance().createScratchFile(project, "scratchfile.${file.language.associatedFileType?.defaultExtension}", file.language, parent.text) ?: return
+        firstElement.parents()
 
-        (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
+        firstElement.parents().
 
-        val scratchFile2 = ScratchRootType.getInstance().createScratchFile(project, "scratchfile.kt", Language.findLanguageByID("kotlin"), parent.text.replace("\n", "")) ?: return
+        val commonParent = firstElement.parents().firstOrNull { parent ->
+            endElement.parents().firstOrNull {endParent ->
+                parent == endParent
+            } != null
+        } ?: return
 
-        manager.openFileImpl2(manager.windows.last(), scratchFile2, false)
+        val scratchFile = ScratchRootType.getInstance().createScratchFile(project, "selected_text.${file.language.associatedFileType?.defaultExtension}", file.language, editor.selectionModel.selectedText) ?: return
+
+        val pair = (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
+        pair.getSecond()
+
+        val stringBuilder = StringBuilder()
+
+        commonParent.children.forEach { child ->
+            val startOffset = child.textOffset
+            val endOffset = startOffset + child.textLength
+
+            if (!isChildInRange(editor, startOffset = startOffset, endOffset = endOffset, selectionStart = selectionStart, selectionEnd = selectionEnd)) return@forEach
+
+            if (stringBuilder.isEmpty()) {
+                val prevSibling = child.prevSibling
+                if (prevSibling is PsiWhiteSpace) {
+                    val indent= prevSibling.text.split("\n").last()
+                    stringBuilder.append(indent)
+                }
+            }
+
+            stringBuilder.append(child.text)
+
+            if (child !is PsiWhiteSpace) {
+                val virtualFile = ScratchRootType.getInstance().createScratchFile(
+                        project,
+                        "${file.name}_generated.${file.language.associatedFileType?.defaultExtension}",
+                        file.language,
+                        stringBuilder.toString()
+                ) ?: return@forEach
+
+                manager.openFileImpl2(manager.windows.last(), virtualFile, false)
+            }
+
+        }
+
     }
+
+    private fun isChildInRange(editor: Editor, startOffset: Int, endOffset: Int, selectionStart: Int, selectionEnd: Int): Boolean {
+        if (editor.document.getLineNumber(startOffset) == editor.document.getLineNumber(selectionStart)) return true
+
+        if ((startOffset..endOffset).contains(selectionStart)) return true
+        if ((startOffset..endOffset).contains(selectionEnd)) return true
+        return (selectionStart..selectionEnd).contains(startOffset)
+    }
+
 }
