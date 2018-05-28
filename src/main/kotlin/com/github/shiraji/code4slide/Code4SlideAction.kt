@@ -8,8 +8,10 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.impl.FileEditorManagerImpl
+import com.intellij.psi.PsiBlockStatement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.*
+import org.jetbrains.kotlin.psi.KtBlockExpression
 
 class Code4SlideAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent?) {
@@ -25,6 +27,8 @@ class Code4SlideAction : AnAction() {
         val endElement = file.findElementAt(selectionEnd) ?: return
         val firstParents = firstElement.parents().asIterable().plus(firstElement)
         val endParents = endElement.parents().asIterable().plus(endElement)
+        val ktLang = Language.findLanguageByID("kotlin") ?: return
+        val javaLang = Language.findLanguageByID("JAVA") ?: return
 
         val commonParent = firstParents.firstOrNull { parent ->
             endParents.firstOrNull {endParent ->
@@ -33,25 +37,29 @@ class Code4SlideAction : AnAction() {
         } ?: return
 
         val scratchFile = ScratchRootType.getInstance().createScratchFile(project, "selected_text.${file.language.associatedFileType?.defaultExtension}", file.language, editor.selectionModel.selectedText) ?: return
-
-        val pair = (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
-        pair.getSecond()
+        (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
 
         val stringBuilder = StringBuilder()
 
-        commonParent.children.forEach { child ->
-            val startOffset = child.textOffset
-            val endOffset = startOffset + child.textLength
+        val targetElement = when (file.language) {
+            javaLang -> if (commonParent is PsiBlockStatement) commonParent.parent else commonParent
+            ktLang -> if (commonParent is KtBlockExpression) commonParent.parent else commonParent
+            else -> commonParent
+        }
 
-            if (!isChildInRange(editor, startOffset = startOffset, endOffset = endOffset, selectionStart = selectionStart, selectionEnd = selectionEnd)) return@forEach
-
-            if (stringBuilder.isEmpty()) {
-                val prevSibling = child.prevSibling
-                if (prevSibling is PsiWhiteSpace) {
-                    val indent= prevSibling.text.split("\n").last()
-                    stringBuilder.append(indent)
-                }
-            }
+        targetElement.children.forEach { child ->
+//            val startOffset = child.textOffset
+//            val endOffset = startOffset + child.textLength
+//
+//            if (!isChildInRange(editor, startOffset = startOffset, endOffset = endOffset, selectionStart = selectionStart, selectionEnd = selectionEnd)) return@forEach
+//
+//            if (stringBuilder.isEmpty()) {
+//                val prevSibling = child.prevSibling
+//                if (prevSibling is PsiWhiteSpace) {
+//                    val indent= prevSibling.text.split("\n").last()
+//                    stringBuilder.append(indent)
+//                }
+//            }
 
             stringBuilder.append(child.text)
 
@@ -65,9 +73,7 @@ class Code4SlideAction : AnAction() {
 
                 manager.openFileImpl2(manager.windows.last(), virtualFile, false)
             }
-
         }
-
     }
 
     private fun isChildInRange(editor: Editor, startOffset: Int, endOffset: Int, selectionStart: Int, selectionEnd: Int): Boolean {

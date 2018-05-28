@@ -28,7 +28,6 @@
     <output url="file://$MODULE_DIR$/../../out/production/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../src/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/kotlin" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/resources" type="java-resource" />
     </content>
@@ -38,13 +37,15 @@
     <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
-          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/lib/tools.jar!/" />
+          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.40" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.40" level="project" />
     <orderEntry type="module-library" scope="PROVIDED">
       <library name="Gradle: com.jetbrains:ideaIC:2017.3.5">
         <CLASSES>
@@ -193,7 +194,48 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.40" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.40" level="project" />
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: org.jetbrains.plugins:Groovy:ideaIC-2017.3.5-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Groovy/lib/groovy-rt-constants.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Groovy/lib/Groovy.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Groovy/lib/groovy-jps-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Groovy/lib/groovy_rt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Gradle: org.jetbrains.plugins:Kotlin:ideaIC-2017.3.5-withSources">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/sam-with-receiver-compiler-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-daemon-client.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/android-lint.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-stdlib.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/javaslang-2.0.6.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/noarg-compiler-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/markdown.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-script-runtime.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/android-extensions-ide.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/noarg-ide-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-reflect.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-gradle-tooling.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlinx-coroutines-core.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/sam-with-receiver-ide-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/allopen-ide-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/allopen-compiler-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlinx-coroutines-jdk8.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-plugin.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kapt3-idea.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/javax.inject-1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/android-extensions-compiler.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/kotlin-script-util.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/ideaIC/2017.3.5/69a951f31e6bb7bb9ee36c3107ce120d50229f95/ideaIC-2017.3.5/plugins/Kotlin/lib/javaslang-match-2.0.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
