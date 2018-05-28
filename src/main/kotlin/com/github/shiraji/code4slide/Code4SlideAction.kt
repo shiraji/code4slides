@@ -25,26 +25,15 @@ class Code4SlideAction : AnAction() {
         val offset = editor.caretModel.offset
         val element = file.findElementAt(offset) ?: return
 
-        val parent = PsiTreeUtil.getParentOfType(element, PsiIfStatement::class.java, PsiMethod::class.java, PsiClass::class.java) ?: return
+        // diff by language
+        val parent = PsiTreeUtil.getParentOfType(element, PsiIfStatement::class.java, PsiMethod::class.java, PsiClass::class.java, PsiSwitchStatement::class.java) ?: return
 
-//        val parent = element.parentOfType(PsiIfStatement::class, PsiMethod::class, PsiClass::class) ?: return
-
-//        val selectedText = editor.selectionModel.selectedText ?: return
         val scratchFile = ScratchRootType.getInstance().createScratchFile(project, "scratchfile.${file.language.associatedFileType?.defaultExtension}", file.language, parent.text) ?: return
 
-        val openFileInNewWindow = (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
+        (manager as? FileEditorManagerImpl)?.openFileInNewWindow(scratchFile) ?: return
 
+        val scratchFile2 = ScratchRootType.getInstance().createScratchFile(project, "scratchfile.kt", Language.findLanguageByID("kotlin"), parent.text.replace("\n", "")) ?: return
 
-        openFileInNewWindow.first[0]
-//        container.add(EditorTabbedContainer.createDockableEditor(myProject, null, file, new Presentation(file.getName()), editorWindow), null);
-
-
-        val scratchFile2 = ScratchRootType.getInstance().createScratchFile(project, "scratchfile.kt", Language.findLanguageByID("kotlin"),
-                parent.text.replace("\n", "")) ?: return
-//
-//        manager.openFile(scratchFile2, false)
-        manager.openFileImpl2(manager.windows[1],scratchFile2, false)
-//                val fileEditor = openFileInNewWindow.second[0].createEditor(project, scratchFile2)
-//        openFileInNewWindow.first.set(1, fileEditor)
+        manager.openFileImpl2(manager.windows.last(), scratchFile2, false)
     }
 }
